@@ -7,29 +7,34 @@ class CustomSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Container(
-      padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
       child: TextField(
         onChanged: (value) {
           context.read<FinanceProvider>().setSearchQuery(value);
         },
+        style: const TextStyle(color: Colors.white),
         decoration: InputDecoration(
           hintText: 'Ara...',
-          prefixIcon: Icon(Icons.search, color: theme.colorScheme.primary),
+          hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
+          prefixIcon: Icon(Icons.search, color: Colors.white.withOpacity(0.7)),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(color: Colors.white.withOpacity(0.2)),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(color: Colors.white.withOpacity(0.2)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: Color(0xFF00FF66)),
           ),
           filled: true,
-          fillColor: theme.colorScheme.surface.withOpacity(0.8),
+          fillColor: Colors.white.withOpacity(0.1),
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          hintStyle:
-              TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.5)),
         ),
-        style: TextStyle(color: theme.colorScheme.onSurface),
       ),
     );
   }

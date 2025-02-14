@@ -27,42 +27,56 @@ class CurrencyList extends StatelessWidget {
         return Container(
           margin: const EdgeInsets.only(top: 8),
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface.withOpacity(0.95),
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-            ),
+            color: Colors.black.withOpacity(0.5),
+            borderRadius: BorderRadius.circular(12),
           ),
-          child: ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-            ),
-            child: Column(
-              children: [
-                const CustomSearchBar(),
-                Expanded(
-                  child: RefreshIndicator(
-                    color: Theme.of(context).colorScheme.primary,
-                    onRefresh: () => provider.fetchData(),
-                    child: items.isEmpty
-                        ? const Center(
-                            child: Text('Sonuç bulunamadı'),
-                          )
-                        : ListView.builder(
-                            padding: const EdgeInsets.all(8),
-                            itemCount: items.length,
-                            itemBuilder: (context, index) {
-                              final item = items[index];
-                              return item.type == 'CryptoCurrency'
-                                  ? CryptoCard(currency: item)
-                                  : CurrencyCard(currency: item);
-                            },
+          child: Column(
+            children: [
+              const CustomSearchBar(),
+              Expanded(
+                child: RefreshIndicator(
+                  color: const Color(0xFF00FF66),
+                  onRefresh: () async {
+                    await context.read<FinanceProvider>().fetchData();
+                  },
+                  child: items.isEmpty
+                      ? const Center(
+                          child: Text(
+                            'Sonuç bulunamadı',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                  ),
+                        )
+                      : ListView.builder(
+                          padding: const EdgeInsets.all(8),
+                          itemCount: items.length,
+                          itemBuilder: (context, index) {
+                            final item = items[index];
+                            return Container(
+                              margin: const EdgeInsets.symmetric(vertical: 4),
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.3),
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: item.change >= 0
+                                      ? const Color(0xFF00FF66)
+                                      : Colors.red,
+                                  width: 1,
+                                ),
+                              ),
+                              child: item.type == 'CryptoCurrency'
+                                  ? CryptoCard(currency: item)
+                                  : CurrencyCard(currency: item),
+                            );
+                          },
+                        ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },
