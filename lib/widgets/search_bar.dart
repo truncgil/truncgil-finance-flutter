@@ -7,24 +7,29 @@ class CustomSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
       child: TextField(
         onChanged: (value) {
           context.read<FinanceProvider>().setSearchQuery(value);
         },
         decoration: InputDecoration(
           hintText: 'Ara...',
-          prefixIcon: const Icon(Icons.search),
+          prefixIcon: Icon(Icons.search, color: theme.colorScheme.primary),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide.none,
           ),
           filled: true,
-          fillColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+          fillColor: theme.colorScheme.surface.withOpacity(0.8),
           contentPadding:
-              const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          hintStyle:
+              TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.5)),
         ),
+        style: TextStyle(color: theme.colorScheme.onSurface),
       ),
     );
   }

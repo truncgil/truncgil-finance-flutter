@@ -24,29 +24,46 @@ class CurrencyList extends StatelessWidget {
                 ? provider.gold
                 : provider.crypto;
 
-        return Column(
-          children: [
-            const CustomSearchBar(),
-            Expanded(
-              child: RefreshIndicator(
-                onRefresh: () => provider.fetchData(),
-                child: items.isEmpty
-                    ? const Center(
-                        child: Text('Sonuç bulunamadı'),
-                      )
-                    : ListView.builder(
-                        padding: const EdgeInsets.all(8),
-                        itemCount: items.length,
-                        itemBuilder: (context, index) {
-                          final item = items[index];
-                          return item.type == 'CryptoCurrency'
-                              ? CryptoCard(currency: item)
-                              : CurrencyCard(currency: item);
-                        },
-                      ),
-              ),
+        return Container(
+          margin: const EdgeInsets.only(top: 8),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface.withOpacity(0.95),
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(30),
             ),
-          ],
+          ),
+          child: ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(30),
+            ),
+            child: Column(
+              children: [
+                const CustomSearchBar(),
+                Expanded(
+                  child: RefreshIndicator(
+                    color: Theme.of(context).colorScheme.primary,
+                    onRefresh: () => provider.fetchData(),
+                    child: items.isEmpty
+                        ? const Center(
+                            child: Text('Sonuç bulunamadı'),
+                          )
+                        : ListView.builder(
+                            padding: const EdgeInsets.all(8),
+                            itemCount: items.length,
+                            itemBuilder: (context, index) {
+                              final item = items[index];
+                              return item.type == 'CryptoCurrency'
+                                  ? CryptoCard(currency: item)
+                                  : CurrencyCard(currency: item);
+                            },
+                          ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         );
       },
     );

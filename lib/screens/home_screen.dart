@@ -26,15 +26,12 @@ class _HomeScreenState extends State<HomeScreen>
 
   Widget _buildLogo(bool isDarkMode) {
     try {
-      return SvgPicture.asset(
-        isDarkMode
-            ? 'assets/images/logo-dark.svg'
-            : 'assets/images/logo-light.svg',
-        height: 45,
-        fit: BoxFit.contain,
-        placeholderBuilder: (BuildContext context) => Container(
-          padding: const EdgeInsets.all(8.0),
-          child: const CircularProgressIndicator(),
+      return Container(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        height: 40,
+        child: Image.asset(
+          'assets/images/logo.png',
+          fit: BoxFit.contain,
         ),
       );
     } catch (e) {
@@ -49,28 +46,63 @@ class _HomeScreenState extends State<HomeScreen>
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: theme.colorScheme.surface,
-        title: _buildLogo(isDarkMode),
-        centerTitle: true,
-        elevation: 0,
-        bottom: TabBar(
-          controller: _tabController,
-          labelColor: theme.colorScheme.onSurface,
-          unselectedLabelColor: theme.colorScheme.onSurface.withOpacity(0.6),
-          tabs: const [
-            Tab(text: 'Döviz'),
-            Tab(text: 'Altın'),
-            Tab(text: 'Kripto'),
-          ],
-        ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: const [
-          CurrencyList(type: 'currency'),
-          CurrencyList(type: 'gold'),
-          CurrencyList(type: 'crypto'),
+      backgroundColor: theme.colorScheme.background,
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    theme.colorScheme.primary.withOpacity(0.1),
+                    theme.colorScheme.background,
+                  ],
+                ),
+              ),
+            ),
+          ),
+          SafeArea(
+            child: Column(
+              children: [
+                Container(
+                  height: 120,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        child: _buildLogo(isDarkMode),
+                      ),
+                      TabBar(
+                        controller: _tabController,
+                        labelColor: theme.colorScheme.primary,
+                        unselectedLabelColor:
+                            theme.colorScheme.onSurface.withOpacity(0.6),
+                        indicatorColor: theme.colorScheme.primary,
+                        indicatorWeight: 3,
+                        tabs: const [
+                          Tab(text: 'Döviz'),
+                          Tab(text: 'Altın'),
+                          Tab(text: 'Kripto'),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: const [
+                      CurrencyList(type: 'currency'),
+                      CurrencyList(type: 'gold'),
+                      CurrencyList(type: 'crypto'),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
