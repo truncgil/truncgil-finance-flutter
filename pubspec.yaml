@@ -1,0 +1,31 @@
+name: truncgil_finance
+description: Truncgil Finance mobil uygulaması
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.1.0
+  provider: ^6.0.5
+  cached_network_image: ^3.2.3
+  shimmer: ^3.0.0
+  intl: ^0.18.1
+  cupertino_icons: ^1.0.2
+  flutter_svg: ^2.0.7
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/logo-dark.svg
+    - assets/images/logo-light.svg
+    - assets/images/ 
