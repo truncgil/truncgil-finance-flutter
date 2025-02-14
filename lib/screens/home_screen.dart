@@ -30,11 +30,8 @@ class _HomeScreenState extends State<HomeScreen>
         isDarkMode
             ? 'assets/images/logo-dark.svg'
             : 'assets/images/logo-light.svg',
-        height: 32,
-        colorFilter: ColorFilter.mode(
-          isDarkMode ? Colors.white : Colors.black,
-          BlendMode.srcIn,
-        ),
+        height: 45,
+        fit: BoxFit.contain,
         placeholderBuilder: (BuildContext context) => Container(
           padding: const EdgeInsets.all(8.0),
           child: const CircularProgressIndicator(),
