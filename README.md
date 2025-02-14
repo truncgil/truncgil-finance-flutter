@@ -2,7 +2,8 @@
 
 A comprehensive mobile application for tracking real-time currency exchange rates, gold prices, and cryptocurrency values using the Truncgil Finance API.
 
-![Truncgil Finance](assets/images/logo-dark.svg)
+![Truncgil Finance Light](assets/images/logo-light.svg)
+![Truncgil Finance Dark](assets/images/logo-dark.svg)
 
 ## About Truncgil Finance
 
