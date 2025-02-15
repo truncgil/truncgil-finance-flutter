@@ -17,8 +17,10 @@ class MyApp extends StatelessWidget {
       create: (context) => FinanceProvider(),
       child: MaterialApp(
         title: 'Truncgil Finance',
+        debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
+        themeMode: ThemeMode.dark,
         home: const HomeScreen(),
       ),
     );

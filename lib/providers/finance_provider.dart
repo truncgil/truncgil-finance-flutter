@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../models/currency_model.dart';
@@ -11,12 +12,29 @@ class FinanceProvider extends ChangeNotifier {
   bool _isLoading = false;
   String _searchQuery = '';
   String? _lastUpdate;
+  int? _minutesAgo;
+
+  FinanceProvider() {
+    // Otomatik güncelleme kaldırıldı
+  }
+
 
   List<CurrencyModel> get currencies => _filterItems(_currencies);
   List<CurrencyModel> get gold => _filterItems(_gold);
   List<CurrencyModel> get crypto => _filterItems(_crypto);
   bool get isLoading => _isLoading;
   String? get lastUpdate => _lastUpdate;
+  int? get minutesAgo => _minutesAgo;
+
+  String _formatDateTime(String dateStr) {
+    try {
+      final date = DateTime.parse(dateStr);
+      return DateFormat('dd.MM.yyyy HH:mm').format(date);
+    } catch (e) {
+      debugPrint('Tarih formatı hatası: $e');
+      return dateStr;
+    }
+  }
 
   List<CurrencyModel> _filterItems(List<CurrencyModel> items) {
     if (_searchQuery.isEmpty) return items;
@@ -33,6 +51,8 @@ class FinanceProvider extends ChangeNotifier {
   }
 
   Future<void> fetchData() async {
+    if (_isLoading) return; // Zaten yükleniyorsa tekrar başlatma
+
     _isLoading = true;
     notifyListeners();
 
@@ -42,11 +62,21 @@ class FinanceProvider extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        final rates = data['Rates'] as Map<String, dynamic>;
 
-        // Son güncelleme tarihini ayarla
-        final now = DateTime.now();
-        _lastUpdate = DateFormat('dd.MM.yyyy HH:mm').format(now);
+        // Meta verilerini al
+        if (data['Meta_Data'] != null) {
+          final metaData = data['Meta_Data'];
+          _lastUpdate = _formatDateTime(metaData['Update_Date'] ?? '');
+          _minutesAgo = (metaData['Minutes_Ago'] as num?)?.round();
+
+          if (_lastUpdate == null || _lastUpdate!.isEmpty) {
+            throw Exception('Meta verisi alınamadı');
+          }
+        } else {
+          throw Exception('Meta verisi bulunamadı');
+        }
+
+        final rates = data['Rates'] as Map<String, dynamic>;
 
         // Para birimleri
         _currencies = rates.entries
@@ -95,12 +125,20 @@ class FinanceProvider extends ChangeNotifier {
           );
         }).toList();
 
-        debugPrint('Currencies: ${_currencies.length}');
-        debugPrint('Gold: ${_gold.length}');
-        debugPrint('Crypto: ${_crypto.length}');
+        debugPrint('Veriler başarıyla güncellendi');
+        debugPrint('Son güncelleme: $_lastUpdate');
+        debugPrint('Dakika: $_minutesAgo');
+      } else {
+        throw Exception('Veri alınamadı: ${response.statusCode}');
       }
     } catch (e) {
       debugPrint('Veri çekme hatası: $e');
+      // Hata durumunda 3 saniye sonra tekrar deneyelim
+      Future.delayed(const Duration(seconds: 3), () {
+        if (_lastUpdate == null) {
+          fetchData();
+        }
+      });
     }
 
     _isLoading = false;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/finance_provider.dart';
+import '../models/currency_model.dart';
 import 'package:intl/intl.dart';
 
 class CurrencyGrid extends StatelessWidget {
@@ -13,10 +14,6 @@ class CurrencyGrid extends StatelessWidget {
 
     return Consumer<FinanceProvider>(
       builder: (context, provider, child) {
-        if (provider.isLoading) {
-          return const SizedBox.shrink();
-        }
-
         final featuredItems = [
           ...provider.currencies.take(3),
           ...provider.crypto.take(3),
@@ -33,9 +30,19 @@ class CurrencyGrid extends StatelessWidget {
               crossAxisSpacing: 8,
               mainAxisSpacing: 8,
             ),
-            itemCount: featuredItems.length,
+            itemCount: 6, // Sabit sayıda öğe
             itemBuilder: (context, index) {
-              final item = featuredItems[index];
+              final item = index < featuredItems.length
+                  ? featuredItems[index]
+                  : CurrencyModel(
+                      type: 'Currency',
+                      name: '',
+                      code: '',
+                      buying: '0',
+                      selling: '0',
+                      change: 0,
+                    );
+
               final isPositive = item.change >= 0;
               final isCrypto = item.type == 'CryptoCurrency';
 
@@ -47,7 +54,8 @@ class CurrencyGrid extends StatelessWidget {
                     '₺${tryFormatter.format(double.tryParse(item.buying) ?? 0)}';
               }
 
-              return Container(
+              return AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
                 decoration: BoxDecoration(
                   color: Colors.black.withOpacity(0.3),
                   borderRadius: BorderRadius.circular(12),
@@ -71,25 +79,33 @@ class CurrencyGrid extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 4),
-                        Text(
-                          '${tryFormatter.format(item.change)}%',
-                          style: TextStyle(
-                            color: isPositive
-                                ? const Color(0xFF00FF66)
-                                : Colors.red,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
+                        AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 300),
+                          child: Text(
+                            '${tryFormatter.format(item.change)}%',
+                            key: ValueKey(item.change),
+                            style: TextStyle(
+                              color: isPositive
+                                  ? const Color(0xFF00FF66)
+                                  : Colors.red,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 4),
-                    Text(
-                      formattedValue,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      child: Text(
+                        formattedValue,
+                        key: ValueKey(formattedValue),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ],

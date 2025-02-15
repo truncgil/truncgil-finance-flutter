@@ -40,7 +40,8 @@ class CurrencyCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 8),
-                  Container(
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
                     padding: const EdgeInsets.symmetric(
                       horizontal: 6,
                       vertical: 2,
@@ -51,14 +52,18 @@ class CurrencyCard extends StatelessWidget {
                           : Colors.red.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(4),
                     ),
-                    child: Text(
-                      '${tryFormatter.format(currency.change)}%',
-                      style: TextStyle(
-                        color: currency.change >= 0
-                            ? const Color(0xFF00FF66)
-                            : Colors.red,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      child: Text(
+                        '${tryFormatter.format(currency.change)}%',
+                        key: ValueKey(currency.change),
+                        style: TextStyle(
+                          color: currency.change >= 0
+                              ? const Color(0xFF00FF66)
+                              : Colors.red,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -71,20 +76,28 @@ class CurrencyCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(
-                '₺${tryFormatter.format(buyingValue)}',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 300),
+                child: Text(
+                  '₺${tryFormatter.format(buyingValue)}',
+                  key: ValueKey(buyingValue),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               const SizedBox(height: 4),
-              Text(
-                '₺${tryFormatter.format(sellingValue)}',
-                style: TextStyle(
-                  color: Colors.white.withOpacity(0.7),
-                  fontSize: 14,
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 300),
+                child: Text(
+                  '₺${tryFormatter.format(sellingValue)}',
+                  key: ValueKey(sellingValue),
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(0.7),
+                    fontSize: 14,
+                  ),
                 ),
               ),
             ],

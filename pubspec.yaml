@@ -1,5 +1,5 @@
 name: truncgil_finance
-description: Truncgil Finance mobil uygulaması
+description: Truncgil Finance - Döviz, Altın ve Kripto Para Takip Uygulaması
 publish_to: 'none'
 
 version: 1.0.0+1
@@ -29,7 +29,6 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/logo.png
-    - assets/images/
     - assets/images/logo-dark.svg
     - assets/images/logo-light.svg
     - assets/images/background.svg

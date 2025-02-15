@@ -82,7 +82,7 @@ class _MarketScreenState extends State<MarketScreen>
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Text(
-          'Piyasalar',
+          'Truncgil Finance',
           style: TextStyle(
             color: Colors.white,
             fontSize: 20,
@@ -104,7 +104,7 @@ class _MarketScreenState extends State<MarketScreen>
             fontWeight: FontWeight.normal,
           ),
           tabs: const [
-            Tab(text: 'Döviz'),
+            Tab(text: 'Para'),
             Tab(text: 'Altın'),
             Tab(text: 'Kripto'),
           ],

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/finance_provider.dart';
-import '../constants/app_constants.dart';
 import 'currency_card.dart';
 import 'crypto_card.dart';
 import 'search_bar.dart';
@@ -22,10 +21,6 @@ class CurrencyList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<FinanceProvider>(
       builder: (context, provider, child) {
-        if (provider.isLoading) {
-          return const Center(child: CircularProgressIndicator());
-        }
-
         final items = type == 'currency'
             ? provider.currencies
             : type == 'gold'
@@ -55,7 +50,8 @@ class CurrencyList extends StatelessWidget {
                   itemCount: items.length,
                   itemBuilder: (context, index) {
                     final item = items[index];
-                    return Container(
+                    return AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
                       margin: const EdgeInsets.symmetric(vertical: 4),
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(

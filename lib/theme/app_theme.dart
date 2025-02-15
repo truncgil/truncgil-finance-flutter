@@ -17,9 +17,7 @@ class AppTheme {
       error: Colors.red,
       surface: Colors.grey.shade100,
       onSurface: Colors.black87,
-      background: Colors.white,
-      onBackground: Colors.black87,
-      surfaceVariant: Colors.grey.shade200,
+      surfaceContainerHighest: Colors.grey.shade200,
       onSurfaceVariant: Colors.black87,
       outline: Colors.grey.shade300,
     ),
@@ -31,19 +29,19 @@ class AppTheme {
         borderRadius: BorderRadius.circular(12),
       ),
     ),
-    tabBarTheme: TabBarTheme(
+    tabBarTheme: const TabBarTheme(
       dividerColor: Colors.transparent,
       indicatorColor: truncgilGreen,
       indicatorSize: TabBarIndicatorSize.label,
       indicator: UnderlineTabIndicator(
         borderSide: BorderSide(width: 2, color: truncgilGreen),
-        insets: const EdgeInsets.symmetric(horizontal: 16),
+        insets: EdgeInsets.symmetric(horizontal: 16),
       ),
-      labelStyle: const TextStyle(
+      labelStyle: TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: 16,
       ),
-      unselectedLabelStyle: const TextStyle(
+      unselectedLabelStyle: TextStyle(
         fontWeight: FontWeight.normal,
         fontSize: 16,
       ),
@@ -64,9 +62,7 @@ class AppTheme {
       error: Colors.red,
       surface: Colors.grey.shade900,
       onSurface: Colors.white,
-      background: Colors.black,
-      onBackground: Colors.white,
-      surfaceVariant: Colors.grey.shade800,
+      surfaceContainerHighest: Colors.grey.shade800,
       onSurfaceVariant: Colors.white70,
       outline: Colors.grey.shade700,
     ),
@@ -78,19 +74,19 @@ class AppTheme {
         borderRadius: BorderRadius.circular(12),
       ),
     ),
-    tabBarTheme: TabBarTheme(
+    tabBarTheme: const TabBarTheme(
       dividerColor: Colors.transparent,
       indicatorColor: truncgilGreen,
       indicatorSize: TabBarIndicatorSize.label,
       indicator: UnderlineTabIndicator(
         borderSide: BorderSide(width: 2, color: truncgilGreen),
-        insets: const EdgeInsets.symmetric(horizontal: 16),
+        insets: EdgeInsets.symmetric(horizontal: 16),
       ),
-      labelStyle: const TextStyle(
+      labelStyle: TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: 16,
       ),
-      unselectedLabelStyle: const TextStyle(
+      unselectedLabelStyle: TextStyle(
         fontWeight: FontWeight.normal,
         fontSize: 16,
       ),
