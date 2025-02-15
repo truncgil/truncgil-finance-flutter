@@ -21,6 +21,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
   flutter_lints: ^2.0.0
 
 flutter:
@@ -30,4 +31,12 @@ flutter:
     - assets/images/
     - assets/images/logo-dark.svg
     - assets/images/logo-light.svg
-    - assets/images/background.svg 
+    - assets/images/background.svg
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/icon.png"
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/icon/icon_foreground.png"
+  min_sdk_android: 21 
