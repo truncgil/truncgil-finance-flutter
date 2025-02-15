@@ -195,7 +195,11 @@ class _HomeScreenState extends State<HomeScreen>
                     ),
                     child: Container(
                       color: Colors.black87,
+                      constraints: BoxConstraints(
+                        minHeight: MediaQuery.of(context).size.height * 1,
+                      ),
                       child: TabBarView(
+                        physics: const AlwaysScrollableScrollPhysics(),
                         controller: _tabController,
                         children: [
                           CurrencyList(

@@ -34,7 +34,6 @@ class CurrencyList extends StatelessWidget {
 
         return Container(
           margin: EdgeInsets.zero,
-          height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             color: Colors.black.withOpacity(0.5),
             borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
@@ -67,7 +66,7 @@ class CurrencyList extends StatelessWidget {
                           padding: EdgeInsets.only(
                             left: 8,
                             right: 8,
-                            top: 8,
+                            top: 0,
                             bottom: MediaQuery.of(context).padding.bottom + 16,
                           ),
                           itemCount: items.length,
