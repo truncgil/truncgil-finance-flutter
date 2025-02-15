@@ -121,104 +121,82 @@ class _HomeScreenState extends State<HomeScreen>
           SafeArea(
             child: Column(
               children: [
-                AnimatedOpacity(
-                  opacity: _headerOpacity,
-                  duration: const Duration(milliseconds: 200),
-                  child: Container(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: _buildLogo(isDarkMode),
-                        ),
-                        const CurrencyGrid(),
-                      ],
-                    ),
+                Container(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: _buildLogo(isDarkMode),
+                      ),
+                      const CurrencyGrid(),
+                    ],
                   ),
                 ),
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  transform: Matrix4.translationValues(
-                    0,
-                    -AppConstants.getScrollOffset(context) *
-                        (1 - _headerOpacity),
-                    0,
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: const Border(
-                        bottom: BorderSide(
-                          color: Color(0xFF00FF66),
-                          width: 1,
-                        ),
-                      ),
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Colors.black.withOpacity(0.0),
-                          Colors.black.withOpacity(0.1),
-                        ],
+                Container(
+                  decoration: BoxDecoration(
+                    border: const Border(
+                      bottom: BorderSide(
+                        color: Color(0xFF00FF66),
+                        width: 1,
                       ),
                     ),
-                    child: TabBar(
-                      controller: _tabController,
-                      labelColor: Colors.white,
-                      unselectedLabelColor: Colors.white.withOpacity(0.6),
-                      indicatorColor: const Color(0xFF00FF66),
-                      indicatorWeight: 3,
-                      labelStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      unselectedLabelStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.normal,
-                      ),
-                      tabs: const [
-                        Tab(text: 'Döviz'),
-                        Tab(text: 'Altın'),
-                        Tab(text: 'Kripto'),
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.black.withOpacity(0.0),
+                        Colors.black.withOpacity(0.1),
                       ],
                     ),
+                  ),
+                  child: TabBar(
+                    controller: _tabController,
+                    labelColor: Colors.white,
+                    unselectedLabelColor: Colors.white.withOpacity(0.6),
+                    indicatorColor: const Color(0xFF00FF66),
+                    indicatorWeight: 3,
+                    labelStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    unselectedLabelStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                    ),
+                    tabs: const [
+                      Tab(text: 'Döviz'),
+                      Tab(text: 'Altın'),
+                      Tab(text: 'Kripto'),
+                    ],
                   ),
                 ),
                 Expanded(
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    transform: Matrix4.translationValues(
-                      0,
-                      -AppConstants.getScrollOffset(context) *
-                          (1 - _headerOpacity),
-                      0,
+                  child: Container(
+                    color: Colors.black87,
+                    constraints: BoxConstraints(
+                      minHeight: MediaQuery.of(context).size.height * 1.5,
                     ),
-                    child: Container(
-                      color: Colors.black87,
-                      constraints: BoxConstraints(
-                        minHeight: MediaQuery.of(context).size.height * 1,
-                      ),
-                      child: TabBarView(
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        controller: _tabController,
-                        children: [
-                          CurrencyList(
-                            type: 'currency',
-                            scrollController: _scrollControllers[0],
-                            headerOpacity: _headerOpacity,
-                          ),
-                          CurrencyList(
-                            type: 'gold',
-                            scrollController: _scrollControllers[1],
-                            headerOpacity: _headerOpacity,
-                          ),
-                          CurrencyList(
-                            type: 'crypto',
-                            scrollController: _scrollControllers[2],
-                            headerOpacity: _headerOpacity,
-                          ),
-                        ],
-                      ),
+                    child: TabBarView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      controller: _tabController,
+                      children: [
+                        CurrencyList(
+                          type: 'currency',
+                          scrollController: _scrollControllers[0],
+                          headerOpacity: _headerOpacity,
+                        ),
+                        CurrencyList(
+                          type: 'gold',
+                          scrollController: _scrollControllers[1],
+                          headerOpacity: _headerOpacity,
+                        ),
+                        CurrencyList(
+                          type: 'crypto',
+                          scrollController: _scrollControllers[2],
+                          headerOpacity: _headerOpacity,
+                        ),
+                      ],
                     ),
                   ),
                 ),
