@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../models/currency_model.dart';
+import 'package:intl/intl.dart';
 
 class FinanceProvider extends ChangeNotifier {
   List<CurrencyModel> _currencies = [];
@@ -9,11 +10,13 @@ class FinanceProvider extends ChangeNotifier {
   List<CurrencyModel> _crypto = [];
   bool _isLoading = false;
   String _searchQuery = '';
+  String? _lastUpdate;
 
   List<CurrencyModel> get currencies => _filterItems(_currencies);
   List<CurrencyModel> get gold => _filterItems(_gold);
   List<CurrencyModel> get crypto => _filterItems(_crypto);
   bool get isLoading => _isLoading;
+  String? get lastUpdate => _lastUpdate;
 
   List<CurrencyModel> _filterItems(List<CurrencyModel> items) {
     if (_searchQuery.isEmpty) return items;
@@ -40,6 +43,10 @@ class FinanceProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         final rates = data['Rates'] as Map<String, dynamic>;
+
+        // Son güncelleme tarihini ayarla
+        final now = DateTime.now();
+        _lastUpdate = DateFormat('dd.MM.yyyy HH:mm').format(now);
 
         // Para birimleri
         _currencies = rates.entries

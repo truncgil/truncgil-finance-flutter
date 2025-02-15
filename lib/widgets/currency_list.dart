@@ -32,69 +32,50 @@ class CurrencyList extends StatelessWidget {
                 ? provider.gold
                 : provider.crypto;
 
-        return Container(
-          margin: EdgeInsets.zero,
-          height: MediaQuery.of(context).size.height * 1.5,
-          decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.5),
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+        return SingleChildScrollView(
+          controller: scrollController,
+          physics: const AlwaysScrollableScrollPhysics(
+            parent: BouncingScrollPhysics(),
           ),
-          child: Column(
-            children: [
-              const CustomSearchBar(),
-              Expanded(
-                child: RefreshIndicator(
-                  color: const Color(0xFF00FF66),
-                  onRefresh: () async {
-                    await context.read<FinanceProvider>().fetchData();
-                  },
-                  child: items.isEmpty
-                      ? const Center(
-                          child: Text(
-                            'Sonuç bulunamadı',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        )
-                      : ListView.builder(
-                          controller: scrollController,
-                          physics: const AlwaysScrollableScrollPhysics(
-                            parent: BouncingScrollPhysics(),
-                          ),
-                          padding: EdgeInsets.only(
-                            left: 8,
-                            right: 8,
-                            top: 8,
-                            bottom: MediaQuery.of(context).padding.bottom + 100,
-                          ),
-                          itemCount: items.length,
-                          itemBuilder: (context, index) {
-                            final item = items[index];
-                            return Container(
-                              margin: const EdgeInsets.symmetric(vertical: 4),
-                              padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.3),
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                  color: item.change >= 0
-                                      ? const Color(0xFF00FF66)
-                                      : Colors.red,
-                                  width: 1,
-                                ),
-                              ),
-                              child: item.type == 'CryptoCurrency'
-                                  ? CryptoCard(currency: item)
-                                  : CurrencyCard(currency: item),
-                            );
-                          },
+          child: Container(
+            margin: EdgeInsets.zero,
+            child: Column(
+              children: [
+                const CustomSearchBar(),
+                ListView.builder(
+                  primary: false,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.only(
+                    left: 8,
+                    right: 8,
+                    top: 8,
+                    bottom: MediaQuery.of(context).padding.bottom + 200,
+                  ),
+                  itemCount: items.length,
+                  itemBuilder: (context, index) {
+                    final item = items[index];
+                    return Container(
+                      margin: const EdgeInsets.symmetric(vertical: 4),
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: item.change >= 0
+                              ? const Color(0xFF00FF66)
+                              : Colors.red,
+                          width: 1,
                         ),
+                      ),
+                      child: item.type == 'CryptoCurrency'
+                          ? CryptoCard(currency: item)
+                          : CurrencyCard(currency: item),
+                    );
+                  },
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
