@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/finance_provider.dart';
+import '../constants/app_constants.dart';
 import 'currency_card.dart';
 import 'crypto_card.dart';
 import 'search_bar.dart';
 
 class CurrencyList extends StatelessWidget {
   final String type;
+  final ScrollController scrollController;
+  final double headerOpacity;
 
-  const CurrencyList({super.key, required this.type});
+  const CurrencyList({
+    super.key,
+    required this.type,
+    required this.scrollController,
+    required this.headerOpacity,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +33,11 @@ class CurrencyList extends StatelessWidget {
                 : provider.crypto;
 
         return Container(
-          margin: const EdgeInsets.only(top: 8),
+          margin: EdgeInsets.zero,
+          height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             color: Colors.black.withOpacity(0.5),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
           ),
           child: Column(
             children: [
@@ -51,7 +60,16 @@ class CurrencyList extends StatelessWidget {
                           ),
                         )
                       : ListView.builder(
-                          padding: const EdgeInsets.all(8),
+                          controller: scrollController,
+                          physics: const AlwaysScrollableScrollPhysics(
+                            parent: BouncingScrollPhysics(),
+                          ),
+                          padding: EdgeInsets.only(
+                            left: 8,
+                            right: 8,
+                            top: 8,
+                            bottom: MediaQuery.of(context).padding.bottom + 16,
+                          ),
                           itemCount: items.length,
                           itemBuilder: (context, index) {
                             final item = items[index];
