@@ -1,0 +1,4 @@
+storePassword=truncgil123
+keyPassword=truncgil123
+keyAlias=truncgil_finance
+storeFile=/Users/umittunc/Desktop/Works/flutter_dev/truncgil-finance-flutter/android/truncgil_finance.keystore

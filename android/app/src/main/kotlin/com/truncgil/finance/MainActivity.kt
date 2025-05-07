@@ -1,4 +1,4 @@
-package com.example.truncgil_finance
+package com.truncgil.finance
 
 import io.flutter.embedding.android.FlutterActivity
 
